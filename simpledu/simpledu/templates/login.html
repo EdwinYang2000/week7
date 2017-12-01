@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_form %}
+
+{% block title %}
+<h1>Login Page</h1>
+{% endblock %}
+
+
+{% block body %}
+
+    <!--要在form里制定post方法和点击提交后需要请求的url -->
+    <div class="form">
+        <h2>登陆</h2>
+        {{ render_form(form, url_for('front.login')) }}
+
+        </div>
+
+{% endblock %}
