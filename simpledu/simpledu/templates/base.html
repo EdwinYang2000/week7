@@ -38,9 +38,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             {{ current_user.username }}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">个人主页</a></li>
+                            <li><a href="#') }}">个人主页</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">退出登陆</a></li>
+                            <li><a href="{{ url_for('front.logout') }}">退出登陆</a></li>
                         </ul>
 
                     </li>
@@ -58,6 +58,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
+            {{ message }}
         </div>
         {% endfor %}
         {% endif %}

@@ -8,11 +8,11 @@
     {% for course in pagination.items %}
     <div class="col-sm-6 col-md-4 course">
         <div class="thumbnail">
-            <a href="#" target="_blank">
+            <a href="{{ course.url }}" target="_blank">
                 <img src="{{ course.image_url }}" alt="课程">
                 <div class="caption">
                     <h4 class="course__name">{{ course.name }}</h4>
-                    <p class="course_description">{{ course.description }}</p>
+                    <p class="course__description">{{ course.description }}</p>
                 </div>
             </a>
         </div>
