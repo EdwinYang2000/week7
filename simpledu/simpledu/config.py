@@ -1,5 +1,7 @@
 class BaseConfig(object):
     """config class"""
+    INDEX_PER_PAGE = 9
+    ADMIN_PER_PAGE = 15
 
 class DevelopmentConfig(BaseConfig):
     """development configclass"""
