@@ -20,6 +20,7 @@ class RegisterForm(FlaskForm):
         db.session.commit()
         return user
 
+
     def validate_username(self,field):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('用户名已经存在')
@@ -38,11 +39,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField('提交')
 
     def validate_username(self,field):
-        if field.data and not User.query.filter_by(usename=field.data).first():
+        if field.data and not User.query.filter_by(username=field.data).first():
             raise ValidationError('用户名未注册')
 
     def validate_password(self,field):
-        user = User.query.filter_by(username=field.username.data).first()
+        user = User.query.filter_by(username=self.username.data).first()
         if user and not user.check_password(field.data):
             raise ValidationError('密码错误')
 
@@ -72,3 +73,26 @@ class CourseForm(FlaskForm):
         db.session.commit()
         return course
 
+
+class UserForm(FlaskForm):
+    username = StringField('用户名称',validators=[Required(), Length(3,24)])
+    email = StringField('邮箱',validators=[Required(), Email()])
+    password =PasswordField('密码',validators=[Required()])
+    submit = SubmitField('提交')
+
+    def validate_username(self,field):
+        if not User.query.get(self.username.data):
+            raise ValidationError('用户不存在')
+
+    def create_user(self):
+        user = User()
+        self.populate_obj(user)
+        db.session.add(user)
+        db.session.commit()
+        return user
+
+    def update_user(self,user):
+        self.populate_obj(user)
+        db.session.add(user)
+        db.session.commit()
+        return user

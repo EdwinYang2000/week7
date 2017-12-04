@@ -5,8 +5,8 @@
 
         <h1>ID: {{ users.id }}</h1>
         <h1>Username: {{ users.username }}</h1>
+        <h1>密码： {{ users._password }}</h1>
 
-        <h1>Published courses:</h1>
 
     {% for course in users.publish_courses %}
         {{ course.name }}
