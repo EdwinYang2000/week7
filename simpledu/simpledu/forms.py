@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, ValidationError, TextAreaField, IntegerField
 from wtforms.validators import Length, Email, EqualTo, Required, URL, NumberRange
-from simpledu.models import db, User, Course
+from simpledu.models import db, User, Course, Live
 
 
 class RegisterForm(FlaskForm):
@@ -74,25 +74,19 @@ class CourseForm(FlaskForm):
         return course
 
 
-class UserForm(FlaskForm):
-    username = StringField('用户名称',validators=[Required(), Length(3,24)])
-    email = StringField('邮箱',validators=[Required(), Email()])
-    password =PasswordField('密码',validators=[Required()])
+class LiveForm(FlaskForm):
+    name = StringField('直播名称',validators=[Required(),Length(5,32)])
+    author_id = IntegerField(' 直播用户的ID',validators=[Required(),NumberRange(min=1, message='无效的用户ID')])
     submit = SubmitField('提交')
 
-    def validate_username(self,field):
-        if not User.query.get(self.username.data):
-            raise ValidationError('用户不存在')
+    def validate_author_id(self,field):
+        if not User.query.get(self.author_id.data):
+            raise ValidationError("用户不存在")
 
-    def create_user(self):
-        user = User()
-        self.populate_obj(user)
-        db.session.add(user)
-        db.session.commit()
-        return user
+    def create_live(self):
+        live = Live()
 
-    def update_user(self,user):
-        self.populate_obj(user)
-        db.session.add(user)
+        self.populate_obj(live)
+        db.session.add(live)
         db.session.commit()
-        return user
+        return live

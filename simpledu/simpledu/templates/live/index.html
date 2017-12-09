@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Live{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-9">
+        <video id="videoElement" width="100%" height="500px" controls="controls"></video>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+
+{% endblock %}
+
+{% block tail_js %}
+{{ super() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flv.js/1.3.3./flv.min.js"></script>
+<script>
+    if (flvjs.isSupported()){
+    // get video tag
+    var videoElement = document.getElementById('videoElement');
+    //init video player
+    var flvPlayer = flvjs.createPlayer({
+    //flow type
+    type: 'flv',
+    // if live or not
+    isLive: true
+    // live url
+    url: ''
+    });
+    flvPlayer.attachMediaElement(videoElement);
+    flvPlayer.load();
+    //play live
+    flvPlayer.play();
+    }
+</script>
+{% endblock %}
